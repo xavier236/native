@@ -19,4 +19,26 @@ from PIL import Images
 load_dotenv()
 
 STOCK_DIR = os.getenv("STOCK_IMAGES_DIR", "./assets/images")
-MUSIC = os.getenv("BACKGROUND_MUSIC","./assets/music
+MUSIC = os.getenv("BACKGROUND_MUSIC","./assets/music/background_loop.mp3")
+OUT_DIR = os.getenv("OUTPUT_DIR","./output")
+
+# Video config
+WIDTH,HEIGHT = 1080, 1920
+FPS = 24
+TARGET_DURATION = 20 #secondss, adjust for your short
+
+os.makedirs(OUT_DIR, exist_ok=True)
+
+def choose_images(n=2):
+  imgs = [os.path.join(STOCK_DIR, f) for f in os.listdir(STOCK_DIR)
+          if f.lower().endswith((".jpg",".jpeg","png"))]
+  if not imgs:
+    raise FileNotFoundError("No stock images found in" + STOCK_DIR)
+    return random.sample(imgs, min(n, lens(imgs)))
+
+def make_tts(text, out_path):
+  tts = gTTS(text=text, lang="en")
+  tts.save(out_path)
+  return out_path
+
+def make_tts
